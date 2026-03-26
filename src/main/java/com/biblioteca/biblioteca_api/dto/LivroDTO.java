@@ -1,11 +1,10 @@
 package com.biblioteca.biblioteca_api.dto;
 
-import com.biblioteca.biblioteca_api.model.Livro;
-
 public class LivroDTO {
     private Long id;
     private String titulo;
     private String autor;
+    private Integer ano_publicacao;
 
     public LivroDTO() {}
     public LivroDTO(Long id, String titulo, String autor) {
@@ -20,9 +19,11 @@ public class LivroDTO {
     public String getTitulo() {
         return titulo;
     }
-
     public String getAutor() {
         return autor;
+    }
+    public Integer getAno_publicacao() {
+        return ano_publicacao;
     }
 
 }
