@@ -20,6 +20,8 @@ public class LivroService {
                 livro.getId()
                 , livro.getTitulo()
                 , livro.getAutor()
+                ,livro.getAno()
+                ,livro.getAvaliacao()
         );
     }
 
@@ -28,11 +30,13 @@ public class LivroService {
                 .orElseThrow(() -> new BookNotFoundException("Livro não encontrado. ID: " + id));
     }
 
-    private LivroDTO createBook(LivroDTO livroDTO) {
+    public LivroDTO createBook(LivroDTO livroDTO) {
             Livro livro = new Livro();
             livro.setTitulo(livroDTO.getTitulo());
             livro.setAutor(livroDTO.getAutor());
-            livro.setAno(livroDTO.getAno_publicacao());
+            livro.setEmprestado(false);
+            livro.setAno(livroDTO.getAnoPublicacao());
+            livro.setAvaliacao(livroDTO.getAvaliacao());
 
             Livro livroSalvo = livroRepository.save(livro);
             return toDTO(livroSalvo);
@@ -62,13 +66,11 @@ public class LivroService {
 
     public LivroDTO updateBookById(Long id, LivroDTO livroDTO){
         Livro livro = buscarLivroOuFalhar(id);
-        // 2. Atualizar os dados da entidade com os dados do DTO
         livro.setTitulo(livroDTO.getTitulo());
         livro.setAutor(livroDTO.getAutor());
-        livro.setAno(livroDTO.getAno_publicacao());
-        // 3. Salvar a entidade atualizada
+        livro.setAno(livroDTO.getAnoPublicacao());
+        livro.setAvaliacao(livroDTO.getAvaliacao());
         Livro livroAtualizado = livroRepository.save(livro);
-        // 4. Converter para DTO e retornar
         return toDTO(livroAtualizado);
     }
 

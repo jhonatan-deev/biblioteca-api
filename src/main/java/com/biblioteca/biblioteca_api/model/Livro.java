@@ -1,5 +1,6 @@
 package com.biblioteca.biblioteca_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class Livro {
     @Column(nullable = false)
     private String autor;
     @NotNull
+    @JsonProperty("ano_publicacao")
     @Column(nullable = false, name = "ano_publicacao")
     private Integer ano;
     @Column(nullable = false)
@@ -27,13 +29,16 @@ public class Livro {
     private LocalDateTime dataCriacao;
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
+    @Column(nullable = false)
+    private Double avaliacao;
 
     public Livro(){}
-    public Livro(String titulo, String autor, Integer ano) {
+    public Livro(String titulo, String autor, Integer ano, Double avaliacao) {
         this.titulo = titulo;
         this.autor = autor;
         this.ano = ano;
         this.emprestado = false;
+        this.avaliacao = avaliacao;
     }
 
     @PrePersist
@@ -65,6 +70,14 @@ public class Livro {
         return emprestado;
     }
 
+    public Double getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(Double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -80,6 +93,7 @@ public class Livro {
     public void setEmprestado(Boolean emprestado) {
         this.emprestado = emprestado;
     }
+
 
     @Override
     public String toString() {
