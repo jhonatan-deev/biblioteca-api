@@ -1,7 +1,9 @@
 package com.biblioteca.biblioteca_api.controller;
 
 import com.biblioteca.biblioteca_api.dto.LivroDTO;
+import com.biblioteca.biblioteca_api.dto.LivroRequestDTO;
 import com.biblioteca.biblioteca_api.service.LivroService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +19,10 @@ public class LivroController {
         this.service = service;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<LivroDTO> findById(@PathVariable Long id){
-       LivroDTO livro = service.searchBookById(id);
-       return ResponseEntity.ok(livro);
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LivroDTO criar(@RequestBody LivroDTO livroDTO){
-        return service.createBook(livroDTO);
+    public LivroDTO criar(@RequestBody @Valid LivroRequestDTO livroDTO){
+        return service.create(livroDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -52,14 +48,21 @@ public class LivroController {
         return livros;
     }
 
-    @PostMapping("/{id}/emprestar")
+    @PatchMapping("/{id}/emprestar")
     public LivroDTO emprestar(@PathVariable Long id){
         return service.emprestarLivroById(id);
     }
 
-    @PostMapping("/{id}/devolver")
+    @PatchMapping("/{id}/devolver")
     public LivroDTO devolver(@PathVariable Long id){
         return service.returnBookById(id);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LivroDTO> findById(@PathVariable Long id){
+        LivroDTO livro = service.searchBookById(id);
+        return ResponseEntity.ok(livro);
     }
 
     @GetMapping
@@ -72,13 +75,13 @@ public class LivroController {
         return service.searchBookByAutor(autor);
     }
 
-    @GetMapping("/avaliados")
-    public List<LivroDTO> buscarAvaliados(){
-        return service.searchBookByAvailable();
+    @GetMapping("/emprestados")
+    public List<LivroDTO> buscarEmprestados(){
+        return service.searchBookByLoaned();
     }
 
-
-
-
-
+    @GetMapping("/disponiveis")
+    public List<LivroDTO> buscarDisponiveis(){
+        return service.searchBookByNotLoaned();
+    }
 }

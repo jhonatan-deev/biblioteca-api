@@ -1,7 +1,9 @@
 package com.biblioteca.biblioteca_api.service;
 
 import com.biblioteca.biblioteca_api.dto.LivroDTO;
+import com.biblioteca.biblioteca_api.dto.LivroRequestDTO;
 import com.biblioteca.biblioteca_api.exception.BookNotFoundException;
+import com.biblioteca.biblioteca_api.mapper.LivroMapper;
 import com.biblioteca.biblioteca_api.model.Livro;
 import com.biblioteca.biblioteca_api.repository.LivroRepository;
 
@@ -12,9 +14,12 @@ import java.util.List;
 @Service
 public class LivroService {
     private final LivroRepository livroRepository;
-    public LivroService(LivroRepository livroRepository) {
+    private final LivroMapper livroMapper;
+    public LivroService(LivroRepository livroRepository, LivroMapper livroMapper) {
         this.livroRepository = livroRepository;
+        this.livroMapper = livroMapper;
     }
+
     private LivroDTO toDTO(Livro livro){
         return new LivroDTO(
                 livro.getId()
@@ -30,16 +35,12 @@ public class LivroService {
                 .orElseThrow(() -> new BookNotFoundException("Livro não encontrado. ID: " + id));
     }
 
-    public LivroDTO createBook(LivroDTO livroDTO) {
-            Livro livro = new Livro();
-            livro.setTitulo(livroDTO.getTitulo());
-            livro.setAutor(livroDTO.getAutor());
-            livro.setEmprestado(false);
-            livro.setAno(livroDTO.getAnoPublicacao());
-            livro.setAvaliacao(livroDTO.getAvaliacao());
+    public LivroDTO create(LivroRequestDTO dto) {
+        Livro livro = livroMapper.toEntity(dto);
+        livro.setEmprestado(false);
 
-            Livro livroSalvo = livroRepository.save(livro);
-            return toDTO(livroSalvo);
+        Livro saved = livroRepository.save(livro);
+        return livroMapper.toDTO(saved);
     }
 
 
@@ -114,7 +115,7 @@ public class LivroService {
                 .toList();
     }
 
-    public List<LivroDTO> searchBookByAvailable(){
+    public List<LivroDTO> searchBookByNotLoaned(){
         List<Livro> livros = livroRepository.findByEmprestadoFalse();
         if(livros.isEmpty()){
             throw new BookNotFoundException("Nenhum livro disponível encontrado");
@@ -124,7 +125,7 @@ public class LivroService {
                 .toList();
     }
 
-    public List<LivroDTO> searchBookByUnavailable(){
+    public List<LivroDTO> searchBookByLoaned(){
         List<Livro> livros = livroRepository.findByEmprestadoTrue();
         if(livros.isEmpty()){
             throw new BookNotFoundException("Nenhum livro emprestado encontrado");

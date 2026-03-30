@@ -20,9 +20,8 @@ public class Livro {
     @Column(nullable = false)
     private String autor;
     @NotNull
-    @JsonProperty("ano_publicacao")
     @Column(nullable = false, name = "ano_publicacao")
-    private Integer ano;
+    private Integer anoPublicacao;
     @Column(nullable = false)
     private Boolean emprestado;
     @Column(name = "data_criacao", updatable = false)
@@ -36,7 +35,7 @@ public class Livro {
     public Livro(String titulo, String autor, Integer ano, Double avaliacao) {
         this.titulo = titulo;
         this.autor = autor;
-        this.ano = ano;
+        this.anoPublicacao = ano;
         this.emprestado = false;
         this.avaliacao = avaliacao;
     }
@@ -63,7 +62,7 @@ public class Livro {
     }
 
     public Integer getAno() {
-        return ano;
+        return anoPublicacao;
     }
 
     public Boolean getEmprestado() {
@@ -87,7 +86,7 @@ public class Livro {
     }
 
     public void setAno(Integer ano) {
-        this.ano = ano;
+        this.anoPublicacao = ano;
     }
 
     public void setEmprestado(Boolean emprestado) {
@@ -101,7 +100,7 @@ public class Livro {
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
-                ", ano=" + ano +
+                ", ano=" + anoPublicacao +
                 ", emprestado=" + emprestado +
                 '}';
     }

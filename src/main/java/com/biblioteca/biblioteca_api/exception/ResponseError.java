@@ -1,4 +1,8 @@
 package com.biblioteca.biblioteca_api.exception;
 
-public record ResponseError() {
+import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
+
+public record ResponseError(String message, HttpStatus httpStatus, LocalDateTime timer) {
 }

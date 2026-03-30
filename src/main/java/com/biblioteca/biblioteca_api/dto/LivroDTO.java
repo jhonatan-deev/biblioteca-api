@@ -7,7 +7,6 @@ public class LivroDTO {
     private String titulo;
     private String autor;
 
-    @JsonProperty("ano_publicacao")
     private Integer anoPublicacao;
     private Double avaliacao;
 
