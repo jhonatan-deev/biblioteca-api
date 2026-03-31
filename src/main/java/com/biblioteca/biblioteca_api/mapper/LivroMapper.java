@@ -25,6 +25,12 @@ public class LivroMapper {
                 livro.getAno(),
                 livro.getAvaliacao()
         );
+    }
 
+    public void updateEntityFromDTO(LivroRequestDTO dto, Livro livro){
+        livro.setTitulo(dto.getTitulo());
+        livro.setAutor(dto.getAutor());
+        livro.setAno(dto.getAnoPublicacao());
+        livro.setAvaliacao(dto.getAvaliacao());
     }
 }

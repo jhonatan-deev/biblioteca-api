@@ -34,8 +34,8 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroDTO> atualizar(@PathVariable Long id, @RequestBody LivroDTO livroDTO){
-        LivroDTO atualizado = service.updateBookById(id, livroDTO);
+    public ResponseEntity<LivroDTO> atualizar(@PathVariable Long id, @RequestBody LivroRequestDTO dto){
+        LivroDTO atualizado = service.updateBookById(id, dto);
         if(atualizado == null){
             return ResponseEntity.notFound().build();
         }

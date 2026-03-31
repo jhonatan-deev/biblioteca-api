@@ -65,14 +65,11 @@ public class LivroService {
                 .toList();
     }
 
-    public LivroDTO updateBookById(Long id, LivroDTO livroDTO){
+    public LivroDTO updateBookById(Long id, LivroRequestDTO dto){
         Livro livro = buscarLivroOuFalhar(id);
-        livro.setTitulo(livroDTO.getTitulo());
-        livro.setAutor(livroDTO.getAutor());
-        livro.setAno(livroDTO.getAnoPublicacao());
-        livro.setAvaliacao(livroDTO.getAvaliacao());
-        Livro livroAtualizado = livroRepository.save(livro);
-        return toDTO(livroAtualizado);
+        livroMapper.updateEntityFromDTO(dto, livro);
+        Livro atualizado = livroRepository.save(livro);
+        return livroMapper.toDTO(atualizado);
     }
 
     public boolean deleteBookById(Long id){

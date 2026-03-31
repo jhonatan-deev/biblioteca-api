@@ -9,6 +9,17 @@ public class LivroRequestDTO {
     private Integer anoPublicacao;
     private Double avaliacao;
 
+
+    public LivroRequestDTO(String titulo, String autor, Integer anoPublicacao, Double avaliacao) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoPublicacao = anoPublicacao;
+        this.avaliacao = avaliacao;
+    }
+
+    public LivroRequestDTO() {
+    }
+
     public String getTitulo() {
         return titulo;
     }
