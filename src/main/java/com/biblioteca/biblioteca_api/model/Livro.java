@@ -120,4 +120,8 @@ public class Livro {
                 ", emprestado=" + emprestado +
                 '}';
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }

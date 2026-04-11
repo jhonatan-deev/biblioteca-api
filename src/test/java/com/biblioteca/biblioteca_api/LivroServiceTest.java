@@ -40,18 +40,31 @@ class LivroServiceTest {
     private LivroRequestDTO livroRequestDTO;
 
     @BeforeEach
-    void setUp() {
-        livro = new Livro();
-        livro.setId(1L);
-        livro.setTitulo("Dom Casmurro");
-        livro.setAutor("Machado de Assis");
-        livro.setAno(1899);
-        livro.setAvaliacao(5.0);
-        livro.setEmprestado(false);
+        void setUp() {
+            livro = new Livro();
+            livro.setId(1L);
+            livro.setTitulo("Dom Casmurro");
+            livro.setAutor("Machado de Assis");
+            livro.setAno(1899);
+            livro.setAvaliacao(5.0);
+            livro.setEmprestado(false);
 
-        livroDTO = new LivroDTO(1L, "Dom Casmurro", "Machado de Assis", 1899, 5.0);
-        livroRequestDTO = new LivroRequestDTO("Dom Casmurro", "Machado de Assis", 1899, 5.0);
-    }
+            livroDTO = new LivroDTO(
+                    1L,
+                    "Dom Casmurro",
+                    "Machado de Assis",
+                    1899,
+                    5.0
+            );
+
+            livroRequestDTO = new LivroRequestDTO(
+                    "Dom Casmurro",
+                    "Machado de Assis",
+                    1899,
+                    5.0
+            );
+        }
+
 
     @Test
     @DisplayName("Deve criar um livro com sucesso")
@@ -63,9 +76,9 @@ class LivroServiceTest {
         LivroDTO resultado = livroService.create(livroRequestDTO);
 
         assertThat(resultado).isNotNull();
-        assertThat(resultado.getId()).isEqualTo(1L);
-        assertThat(resultado.getTitulo()).isEqualTo("Dom Casmurro");
-        assertThat(resultado.getAutor()).isEqualTo("Machado de Assis");
+        assertThat(resultado.id()).isEqualTo(1L);
+        assertThat(resultado.titulo()).isEqualTo("Dom Casmurro");
+        assertThat(resultado.autor()).isEqualTo("Machado de Assis");
 
         verify(livroMapper, times(1)).toEntity(livroRequestDTO);
         verify(livroRepository, times(1)).save(livro);
@@ -81,7 +94,7 @@ class LivroServiceTest {
         List<LivroDTO> resultado = livroService.searchAllBooks();
 
         assertThat(resultado).hasSize(1);
-        assertThat(resultado.get(0).getTitulo()).isEqualTo("Dom Casmurro");
+        assertThat(resultado.get(0).titulo()).isEqualTo("Dom Casmurro");
         verify(livroRepository, times(1)).findAll();
     }
     @Test
@@ -94,7 +107,7 @@ class LivroServiceTest {
         LivroDTO resultado = livroService.searchBookById(1L);
 
         System.out.println("Resultado: " + resultado);
-        System.out.println("Resultado ID: " + (resultado != null ? resultado.getId() : "null"));
+        System.out.println("Resultado ID: " + (resultado != null ? resultado.id() : "null"));
 
         assertThat(resultado).isNotNull();
     }
@@ -109,11 +122,11 @@ class LivroServiceTest {
 
         // ASSERT
         assertThat(resultado).isNotNull();
-        assertThat(resultado.getId()).isEqualTo(1L);
-        assertThat(resultado.getTitulo()).isEqualTo("Dom Casmurro");
-        assertThat(resultado.getAutor()).isEqualTo("Machado de Assis");
-        assertThat(resultado.getAnoPublicacao()).isEqualTo(1899);
-        assertThat(resultado.getAvaliacao()).isEqualTo(5.0);
+        assertThat(resultado.id()).isEqualTo(1L);
+        assertThat(resultado.titulo()).isEqualTo("Dom Casmurro");
+        assertThat(resultado.autor()).isEqualTo("Machado de Assis");
+        assertThat(resultado.anoPublicacao()).isEqualTo(1899);
+        assertThat(resultado.avaliacao()).isEqualTo(5.0);
 
         verify(livroRepository, times(1)).findById(1L);
     }

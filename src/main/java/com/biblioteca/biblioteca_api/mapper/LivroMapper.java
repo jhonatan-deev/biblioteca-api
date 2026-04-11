@@ -10,10 +10,10 @@ public class LivroMapper {
 
     public Livro toEntity(LivroRequestDTO dto){
         Livro livro = new Livro();
-        livro.setTitulo(dto.getTitulo());
-        livro.setAutor(dto.getAutor());
-        livro.setAno(dto.getAnoPublicacao());
-        livro.setAvaliacao(dto.getAvaliacao());
+        livro.setTitulo(dto.titulo());
+        livro.setAutor(dto.autor());
+        livro.setAno(dto.anoPublicacao());
+        livro.setAvaliacao(dto.avaliacao());
         return livro;
     }
 
@@ -28,9 +28,9 @@ public class LivroMapper {
     }
 
     public void updateEntityFromDTO(LivroRequestDTO dto, Livro livro){
-        livro.setTitulo(dto.getTitulo());
-        livro.setAutor(dto.getAutor());
-        livro.setAno(dto.getAnoPublicacao());
-        livro.setAvaliacao(dto.getAvaliacao());
+        livro.setTitulo(dto.titulo());
+        livro.setAutor(dto.autor());
+        livro.setAno(dto.anoPublicacao());
+        livro.setAvaliacao(dto.avaliacao());
     }
 }
